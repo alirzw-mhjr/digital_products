@@ -6,3 +6,4 @@ media/
 
 db.sqlite3
 local_settings.py
+digital_products/local_settings.py
