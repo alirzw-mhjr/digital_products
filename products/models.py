@@ -16,6 +16,9 @@ class Category(models.Model):
         verbose_name = _('category') #Единственное название в админ-панеле - The singular name in admin panel
         verbose_name_plural = _('Categories') #Множественное название в админ-панеле - The plural name in admin panel
 
+    def __str__(self):
+        return self.title
+
 class Product(models.Model):
     title = models.CharField(_('title'), max_length=50)
     description = models.TextField(_('description'), blank=True)
