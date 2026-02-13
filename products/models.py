@@ -34,10 +34,25 @@ class Product(models.Model):
         verbose_name_plural = _('products') #Множественное название в админ-панеле - The plural name in admin panel
 
 
+    def __str__(self):
+        return self.title
 
 class File(models.Model):
-    product = models.ForeignKey('Product', verbose_name=_('product'), on_delete=models.CASCADE)
+    FILE_PHOTO = 1
+    FILE_AUDIO = 2
+    FILE_VIDEO = 3
+    FILE_PDF = 4
+    FILE_TYPES = (
+        (FILE_PHOTO, _('photo')),
+        (FILE_AUDIO, _('audio')),
+        (FILE_VIDEO, _('video')),
+        (FILE_PDF, _('pdf'))
+    )
+
+
+    product = models.ForeignKey('Product', verbose_name=_('product'), on_delete=models.CASCADE, related_name='files')
     title = models.CharField(_('title'), max_length=50)
+    file_type = models.PositiveSmallIntegerField(_('file type'), choices=FILE_TYPES, default=FILE_PHOTO)
     file = models.FileField(_('file'), upload_to='files/%Y/%m/%d/')
     is_enable = models.BooleanField(_('is enable'), default=True)
     created_time = models.DateTimeField(_('created time'), auto_now_add=True)
@@ -47,3 +62,7 @@ class File(models.Model):
         db_table = 'files' #название таблицы в базе данных - The name of the table in the database
         verbose_name = _('file') #Единственное название в админ-панеле - The singular name in admin panel
         verbose_name_plural = _('files') #Множественное название в админ-панеле - The plural name in admin panel
+
+
+    def __str__(self):
+        return self.title
